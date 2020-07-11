@@ -4,11 +4,12 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { GenericTableComponent } from './generic-table/generic-table.component';
 import { GenericButtonComponent } from './generic-button/generic-button.component';
+import { ModalConfirmationComponent } from './modal-confirmation/modal-confirmation.component';
 
 
 
 @NgModule({
-  declarations: [GenericTableComponent, GenericButtonComponent],
+  declarations: [GenericTableComponent, GenericButtonComponent, ModalConfirmationComponent],
   imports: [
     CommonModule,
     AgGridModule.withComponents([]),
@@ -16,10 +17,12 @@ import { GenericButtonComponent } from './generic-button/generic-button.componen
   ],
   exports: [
     GenericTableComponent,
-    GenericButtonComponent
+    GenericButtonComponent,
+    ModalConfirmationComponent
   ],
   entryComponents: [
-    GenericButtonComponent
+    GenericButtonComponent,
+    ModalConfirmationComponent
   ]
 })
 export class UtilityModule { }

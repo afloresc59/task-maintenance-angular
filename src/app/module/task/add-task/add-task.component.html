@@ -9,7 +9,7 @@
             </div>
 
             <div class="col-sm-9">
-                <input id="name" [(ngModel)]="task.name" type="text" maxlength="50" class="form-control" />
+                <input id="name" [(ngModel)]="task.name" [disabled]="action == '3'" type="text" maxlength="50" class="form-control" />
             </div>
         </div>
 
@@ -19,7 +19,7 @@
             </div>
 
             <div class="col-sm-9">
-                <input id="description" [(ngModel)]="task.description" type="text" maxlength="150"
+                <input id="description" [(ngModel)]="task.description" [disabled]="action == '3'" type="text" maxlength="150"
                     class="form-control" />
             </div>
         </div>
@@ -30,7 +30,7 @@
             </div>
 
             <div class="col-sm-9">
-                <select [(ngModel)]="codeProgress" class="form-control">
+                <select [(ngModel)]="codeProgress" class="form-control" [disabled]="action == '3'">
                     <option *ngFor="let progress of listProgressTypes" [value]="progress.code">{{progress.description}}</option>
                 </select>
             </div>
@@ -42,7 +42,7 @@
             </div>
 
             <div class="col-sm-9">
-                <select [(ngModel)]="codeStatus" class="form-control">
+                <select [(ngModel)]="codeStatus" class="form-control" [disabled]="action == '3'">
                     <option *ngFor="let status of listStatusTypes" [value]="status.code">{{status.description}}</option>
                 </select>
             </div>
@@ -59,7 +59,7 @@
     </table> 
 </div>
 <div class="modal-footer">
-    <button (click)="save()" class="btn btn-info btn-modal btn-sm"><span
+    <button (click)="save()" *ngIf="action != '3'" class="btn btn-info btn-modal btn-sm"><span
             class="fas fa-save mr-1"></span><b>SAVE</b></button>
     <button type="button" class="btn btn-info btn-modal btn-sm" (click)="activeModal.close(null)"><span
             class="fas fa-undo mr-1"></span><b>CANCEL</b></button>

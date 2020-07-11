@@ -1,3 +1,6 @@
+import { ConstantUtils } from './../../../utils/ConstantUtils';
+import { GenericAlert } from './../../../utils/GenericAlert';
+import { ModalConfirmationComponent } from './../../utility/modal-confirmation/modal-confirmation.component';
 import { AddTaskComponent } from './../add-task/add-task.component';
 import { ActionUtils } from './../../../utils/ActionUtils';
 import { TaskStoreService } from './../../../store/task-store.service';
@@ -16,7 +19,7 @@ import { TaskRequest } from 'src/app/model/task-request';
   templateUrl: './task-maintenance.component.html',
   styleUrls: ['./task-maintenance.component.css']
 })
-export class TaskMaintenanceComponent implements OnInit {
+export class TaskMaintenanceComponent extends GenericAlert implements OnInit {
 
   destroy: Subject<boolean>;
 
@@ -24,6 +27,7 @@ export class TaskMaintenanceComponent implements OnInit {
     private gridGenericStoreService: GridGenericStoreService,
     private taskStoreService: TaskStoreService,
     private modalService: NgbModal) {
+      super();
     this.destroy = new Subject<boolean>()
   }
 
@@ -60,7 +64,10 @@ export class TaskMaintenanceComponent implements OnInit {
   }
 
   openModalViewTask(genericBean: GenericBean) {
-    console.log(genericBean.id);
+    const task = new TaskRequest();
+    task.idTask = genericBean.id;
+    this.taskStoreService.addTask(task);
+    this.openModal(ActionUtils.ACTION_VIEW_TASK);
   }
 
   openModalAddTask() {
@@ -75,7 +82,22 @@ export class TaskMaintenanceComponent implements OnInit {
   }
 
   openModalDeleteTask(genericBean: GenericBean) {
-    console.log(genericBean.id);
+    const task = new TaskRequest();
+    task.idTask = genericBean.id;
+    task.status = ConstantUtils.STATUS_INACTIVE;
+
+    const modal = this.modalService.open(ModalConfirmationComponent, { centered: true, backdrop: 'static' });
+    modal.componentInstance.message = 'Are you sure to delete the task?';
+    modal.result.then(response => this.deleteTask(response, task))
+  }
+
+  deleteTask(response: number, task: TaskRequest) {
+    if(response === 1) {
+      this.taskService.deleteTask(task).takeUntil(this.destroy).subscribe(
+        () => this.searchTasks(),
+        () => this.showMessage(false, 'There was an error deleting the task.')
+      );
+    }
   }
 
   openModal(action: string) {

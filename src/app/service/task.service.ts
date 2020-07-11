@@ -34,4 +34,8 @@ export class TaskService {
   }
 
 
+  deleteTask(taskRequest: TaskRequest): Observable<any> {
+    return this.httpClient.put(this.apiUrl + PathApi.DELETE_TASK, taskRequest);
+  }
+
 }

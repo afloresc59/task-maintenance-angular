@@ -1,0 +1,16 @@
+<div class="modal-header modal-header-style">
+    <span>
+        <span class="fas fa-exclamation-triangle iconoMenu"></span><b>Warning</b>
+    </span>
+  </div>
+  <div class="modal-body">
+    <p>{{message}}</p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-info btn-modal btn-sm" (click)="activeModal.close(1)">
+      <b>CONFIRM</b>
+    </button>
+    <button type="button" class="btn btn-info btn-modal btn-sm" (click)="activeModal.close(0)">
+      <b>CANCEL</b>
+    </button>
+  </div>

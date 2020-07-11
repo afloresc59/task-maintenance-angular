@@ -2,12 +2,19 @@
     <div class="row">
         <div class="col-sm-9"></div>
         <div class="col-sm-3">
-            <button (click)="openModalAddTask()" type="button" class="btn btn-info bt-sm fas fa-plus-circle">New Task</button></div>
+            <button (click)="openModalAddTask()" type="button" class="btn btn-info bt-sm fas fa-plus-circle">New
+                Task</button></div>
     </div>
+    
 </div>
-
-<app-generic-table 
-(viewEvent)="openModalViewTask($event)"
-(modifyEvent)="openModalModifyTask($event)"
-(deleteEvent)="openModalDeleteTask($event)">
+<table style="width: 100%;margin-top: 15px;">
+    <tr>
+        <td style="padding-left: 0px !important;">
+            <ngb-alert *ngIf="messageVisible" [type]="statusOperation" [dismissible]="false">
+                <span [class]="styleMessage"></span>{{ message }}</ngb-alert>
+        </td>
+    </tr>
+</table>
+<app-generic-table (viewEvent)="openModalViewTask($event)" (modifyEvent)="openModalModifyTask($event)"
+    (deleteEvent)="openModalDeleteTask($event)">
 </app-generic-table>
