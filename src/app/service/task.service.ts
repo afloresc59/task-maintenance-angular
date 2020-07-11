@@ -25,5 +25,13 @@ export class TaskService {
     return this.httpClient.post(this.apiUrl + PathApi.SAVE_TASK, taskRequest);
   }
 
+  searchTask(taskRequest: TaskRequest): Observable<TaskResponse> {
+    return this.httpClient.get<TaskResponse>(this.apiUrl + PathApi.SEARCH_TASKS + '/' + taskRequest.idTask);
+  }
+
+  updateTask(taskRequest: TaskRequest): Observable<any> {
+    return this.httpClient.put(this.apiUrl + PathApi.UPDATE_TASK, taskRequest);
+  }
+
 
 }

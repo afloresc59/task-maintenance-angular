@@ -8,11 +8,11 @@ import { TaskRequest } from '../model/task-request';
 export class TaskStoreService {
 
   task: BehaviorSubject<TaskRequest>;
-  action: BehaviorSubject<String>;
+  action: BehaviorSubject<string>;
 
   constructor() {
     this.task = new BehaviorSubject<TaskRequest>(new TaskRequest());
-    this.action = new BehaviorSubject<String>('');
+    this.action = new BehaviorSubject<string>('');
   }
 
   addTask(taskRequest: TaskRequest) {
@@ -27,7 +27,7 @@ export class TaskStoreService {
     this.action.next(actionTask);
   }
 
-  getAction(): Observable<String> {
+  getAction(): Observable<string> {
     return this.action.asObservable();
   }
 

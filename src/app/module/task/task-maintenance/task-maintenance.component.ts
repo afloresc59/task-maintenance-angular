@@ -64,12 +64,14 @@ export class TaskMaintenanceComponent implements OnInit {
   }
 
   openModalAddTask() {
-    this.taskStoreService.addTask(new TaskRequest());
     this.openModal(ActionUtils.ACTION_ADD_TASK);
   }
 
   openModalModifyTask(genericBean: GenericBean) {
-    console.log(genericBean.id);
+    const task = new TaskRequest();
+    task.idTask = genericBean.id;
+    this.taskStoreService.addTask(task);
+    this.openModal(ActionUtils.ACTION_MODIFY_TASK);
   }
 
   openModalDeleteTask(genericBean: GenericBean) {
