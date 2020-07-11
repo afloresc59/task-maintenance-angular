@@ -1,1 +1,34 @@
-/* You can add global styles to this file, and also import other style files */
+/* Styles for header and footer */
+.footer {
+    width: 100%;
+    height: 60px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    display: table;
+    background: #001e41;
+    color: white;
+}
+
+.header {
+    width: 100%;
+    height: 60px;
+    position: relative;
+    top: 0;
+    left: 0;
+    display: table;
+    background: #001e41;
+    color: white;
+  }
+
+.headerContent, .footerContent {
+    text-align: center;
+    display: table-cell;
+    vertical-align: middle;
+}
+
+/* Styles for ag grid component */
+.ag-grid {
+    height: 390px;
+}
+

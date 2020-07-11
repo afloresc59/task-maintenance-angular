@@ -1,3 +1,4 @@
+import { UtilityModule } from './../utility/utility.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -9,6 +10,7 @@ import { TaskMaintenanceComponent } from './task-maintenance/task-maintenance.co
   declarations: [TaskMaintenanceComponent],
   imports: [
     CommonModule,
+    UtilityModule,
     TaskRoutingModule
   ]
 })

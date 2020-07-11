@@ -11,5 +11,4 @@ export class TaskMaintenanceComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
 }
