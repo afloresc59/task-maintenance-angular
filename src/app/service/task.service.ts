@@ -1,3 +1,4 @@
+import { TaskRequest } from './../model/task-request';
 import { PathApi } from './../utils/PathApi';
 import { TaskResponse } from './../model/task-response';
 import { environment } from './../../environments/environment';
@@ -18,6 +19,10 @@ export class TaskService {
 
   searchTasks(): Observable<Array<TaskResponse>> {
     return this.httpClient.get<Array<TaskResponse>>(this.apiUrl + PathApi.SEARCH_TASKS);
+  }
+
+  saveTask(taskRequest: TaskRequest): Observable<any> {
+    return this.httpClient.post(this.apiUrl + PathApi.SAVE_TASK, taskRequest);
   }
 
 

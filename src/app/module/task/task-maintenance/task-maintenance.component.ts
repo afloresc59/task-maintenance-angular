@@ -1,3 +1,6 @@
+import { AddTaskComponent } from './../add-task/add-task.component';
+import { ActionUtils } from './../../../utils/ActionUtils';
+import { TaskStoreService } from './../../../store/task-store.service';
 import { GridGenericStoreService } from './../../../store/grid-generic-store.service';
 import { TaskResponse } from './../../../model/task-response';
 import { TaskService } from './../../../service/task.service';
@@ -5,6 +8,8 @@ import { GenericBean } from './../../../model/generic-bean';
 import { Component, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import 'rxjs/add/operator/takeUntil';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { TaskRequest } from 'src/app/model/task-request';
 
 @Component({
   selector: 'app-task-maintenance',
@@ -16,13 +21,15 @@ export class TaskMaintenanceComponent implements OnInit {
   destroy: Subject<boolean>;
 
   constructor(private taskService: TaskService,
-    private gridGenericStoreService: GridGenericStoreService) {
+    private gridGenericStoreService: GridGenericStoreService,
+    private taskStoreService: TaskStoreService,
+    private modalService: NgbModal) {
     this.destroy = new Subject<boolean>()
   }
 
   ngOnInit() {
     this.gridGenericStoreService.addColumns(this.buildGridColumns());
-    this.taskService.searchTasks().takeUntil(this.destroy).subscribe(data => this.gridGenericStoreService.addData(data));
+    this.searchTasks();
   }
 
   buildGridColumns(): any {
@@ -56,6 +63,11 @@ export class TaskMaintenanceComponent implements OnInit {
     console.log(genericBean.id);
   }
 
+  openModalAddTask() {
+    this.taskStoreService.addTask(new TaskRequest());
+    this.openModal(ActionUtils.ACTION_ADD_TASK);
+  }
+
   openModalModifyTask(genericBean: GenericBean) {
     console.log(genericBean.id);
   }
@@ -63,4 +75,21 @@ export class TaskMaintenanceComponent implements OnInit {
   openModalDeleteTask(genericBean: GenericBean) {
     console.log(genericBean.id);
   }
+
+  openModal(action: string) {
+    this.taskStoreService.addAction(action);
+    const modal = this.modalService.open(AddTaskComponent, { centered: true, backdrop: 'static' });
+    modal.result.then(data => this.validateModalResponse(data));
+  }
+
+  validateModalResponse(response: any) {
+    if(response !== null) {
+      this.searchTasks();
+    }
+  }
+
+  searchTasks() {
+    this.taskService.searchTasks().takeUntil(this.destroy).subscribe(data => this.gridGenericStoreService.addData(data));
+  }
+
 }

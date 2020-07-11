@@ -1,0 +1,66 @@
+<div class="modal-header modal-header-style">
+    <span><b>TASK</b></span>
+</div>
+<div class="modal-body">
+    <div class="container">
+        <div class="row mt-1">
+            <div class="col-sm-3">
+                <label for="name" class="col-form-label">Name:</label>
+            </div>
+
+            <div class="col-sm-9">
+                <input id="name" [(ngModel)]="task.name" type="text" maxlength="50" class="form-control" />
+            </div>
+        </div>
+
+        <div class="row mt-1">
+            <div class="col-sm-3">
+                <label for="description" class="col-form-label">Description:</label>
+            </div>
+
+            <div class="col-sm-9">
+                <input id="description" [(ngModel)]="task.description" type="text" maxlength="150"
+                    class="form-control" />
+            </div>
+        </div>
+
+        <div class="row mt-1">
+            <div class="col-sm-3">
+                <label for="progress" class="col-form-label">Progress:</label>
+            </div>
+
+            <div class="col-sm-9">
+                <select [(ngModel)]="codeProgress" class="form-control">
+                    <option *ngFor="let progress of listProgressTypes" [value]="progress.code">{{progress.description}}</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row mt-1">
+            <div class="col-sm-3">
+                <label for="status" class="col-form-label">Status:</label>
+            </div>
+
+            <div class="col-sm-9">
+                <select [(ngModel)]="codeStatus" class="form-control">
+                    <option *ngFor="let status of listStatusTypes" [value]="status.code">{{status.description}}</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <table style="width: 100%;margin-top: 15px;">
+        <tr>
+          <td style="padding-left: 0px !important;">
+            <ngb-alert *ngIf="messageVisible" [type]="statusOperation" [dismissible]="false">
+              <span [class]="styleMessage"></span>{{ message }}</ngb-alert>
+          </td>
+        </tr>
+    </table> 
+</div>
+<div class="modal-footer">
+    <button (click)="save()" class="btn btn-info btn-modal btn-sm"><span
+            class="fas fa-save mr-1"></span><b>SAVE</b></button>
+    <button type="button" class="btn btn-info btn-modal btn-sm" (click)="activeModal.close(null)"><span
+            class="fas fa-undo mr-1"></span><b>CANCEL</b></button>
+</div>

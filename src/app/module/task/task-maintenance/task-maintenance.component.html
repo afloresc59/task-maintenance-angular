@@ -1,3 +1,11 @@
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9"></div>
+        <div class="col-sm-3">
+            <button (click)="openModalAddTask()" type="button" class="btn btn-info bt-sm fas fa-plus-circle">New Task</button></div>
+    </div>
+</div>
+
 <app-generic-table 
 (viewEvent)="openModalViewTask($event)"
 (modifyEvent)="openModalModifyTask($event)"

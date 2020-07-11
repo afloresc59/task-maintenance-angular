@@ -37,3 +37,13 @@
     justify-content: center !important;
 }
 
+/* Styles for modal */
+.modal-header-style{
+    background-color: #153869;
+    color: white;
+  }
+
+.btn-modal{
+    background-color: #153869 !important;
+}
+
