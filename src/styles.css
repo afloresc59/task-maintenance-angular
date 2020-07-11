@@ -32,3 +32,8 @@
     height: 390px;
 }
 
+.ag-header-cell-label{
+    width: 100% !important;
+    justify-content: center !important;
+}
+
