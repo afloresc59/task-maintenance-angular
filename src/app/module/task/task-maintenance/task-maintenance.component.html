@@ -1,14 +1,33 @@
 <div class="container-fluid mt-5">
     <div class="row">
-        <div class="col-sm-9"></div>
-        <div class="col-sm-3">
+        <div class="col-sm-1">
+            <label for="name" class="col-form-label"><b>Task Name</b>:</label>
+        </div>
+        <div class="col-sm-2">
+            <input id="name" [(ngModel)]="taskSearch.name" type="text" maxlength="50" class="form-control" />
+        </div>
+        <div class="col-sm-1">
+            <label for="name" class="col-form-label"><b>Employee</b>:</label>
+        </div>
+        <div class="col-sm-2">
+            <select [(ngModel)]="codeEmployee" class="form-control">
+                <option value="0">--SELECCIONE--</option>
+                <option *ngFor="let employee of listEmployees" [value]="employee.id">{{employee.names}}
+                    {{employee.surnames}}</option>
+            </select>
+        </div>
+        <div class="col-sm-6">
+            <button (click)="customSearchTasks()" type="button"
+                class="btn btn-info bt-sm fas fa-search mr-2"><span class="text-icon-padding">Search</span></button>
+            <button (click)="clearData()" type="button"
+                class="btn btn-info bt-sm fas fa-plus-circle mr-2"><span class="text-icon-padding">Clear Data</span></button>
             <button (click)="openModalAddTask()" type="button" class="btn btn-info bt-sm fas fa-plus-circle mr-2">New
                 Task</button>
             <button (click)="openModalAssignEmployee()" type="button"
-                class="btn btn-info bt-sm fas fa-plus-circle mr-2">Assign
-                Task</button>
+                class="btn btn-info bt-sm fas fa-user mr-2"><span class="text-icon-padding">Assign Task</span>
+                </button>
             <button (click)="markCompletationTasks()" type="button"
-                class="btn btn-info bt-sm fas fa-plus-circle mr-2">Complete Tasks</button>
+                class="btn btn-info bt-sm fas fa-check-circle mr-2"><span class="text-icon-padding">Complete Tasks</span></button>
         </div>
     </div>
 

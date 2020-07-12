@@ -2,11 +2,11 @@
         <span class="fas fa-eye"></span>
     </button>
     
-    <button (click)='callMethodModify()' class="btn btn-info btn-sm mt-1 mr-1" [ngbTooltip]="msjToolTipEdit">
+    <button (click)='callMethodModify()' *ngIf="isVisibleButton" class="btn btn-info btn-sm mt-1 mr-1" [ngbTooltip]="msjToolTipEdit">
         <span class="fas fa-edit"></span>
     </button>
     
     
-    <button (click)='callMethodDelete()' class="btn btn-info btn-sm mt-1 mr-1" [ngbTooltip]="msjToolTipDelete">
+    <button (click)='callMethodDelete()' *ngIf="isVisibleButton" class="btn btn-info btn-sm mt-1 mr-1" [ngbTooltip]="msjToolTipDelete">
         <span class="fas fa-trash-alt"></span>
     </button>

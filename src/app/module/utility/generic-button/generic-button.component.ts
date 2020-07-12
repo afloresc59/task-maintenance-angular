@@ -15,13 +15,23 @@ export class GenericButtonComponent implements ICellRendererAngularComp {
   msjToolTipDelete: string;
   msjToolTipView: string;
 
-  constructor(private configToolTip: NgbTooltipConfig) { }
+  isVisibleButton: boolean;
+
+  constructor(private configToolTip: NgbTooltipConfig) {
+    this.isVisibleButton = true;
+  }
 
   agInit(parameters: any) {
     this.gridParameters = parameters;
     this.initSettingsToolTip();
     this.initMessagesToolTips();
+    this.initButtonVisibility();
   }
+
+  initButtonVisibility() {
+    const status = this.gridParameters.data.status;
+    this.isVisibleButton = status === '1' ? true : false;
+  }  
   
   initMessagesToolTips() {
     this.msjToolTipEdit = "Edit";

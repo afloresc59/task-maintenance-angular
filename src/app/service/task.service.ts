@@ -46,4 +46,8 @@ export class TaskService {
     return this.httpClient.put(this.apiUrl + PathApi.COMPLETE_TASK_BATCH, tasksRequest);
   }
 
+  customSearchTasks(taskRequest: TaskRequest): Observable<Array<TaskResponse>> {
+    return this.httpClient.post<Array<TaskResponse>>(this.apiUrl + PathApi.CUSTOM_SEARCH_TASKS, taskRequest);
+  }
+
 }

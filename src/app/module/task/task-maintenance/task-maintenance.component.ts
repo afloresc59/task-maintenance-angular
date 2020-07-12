@@ -1,3 +1,6 @@
+import { EmployeeService } from './../../../service/employee.service';
+import { TypeUtils } from './../../../utils/TypeUtils';
+import { EmployeeResponse } from 'src/app/model/employee-response';
 import { GenericTableComponent } from './../../utility/generic-table/generic-table.component';
 import { AssignEmployeeComponent } from './../assign-employee/assign-employee.component';
 import { ConstantUtils } from './../../../utils/ConstantUtils';
@@ -15,7 +18,6 @@ import { Subject } from 'rxjs';
 import 'rxjs/add/operator/takeUntil';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TaskRequest } from 'src/app/model/task-request';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-task-maintenance',
@@ -24,6 +26,9 @@ import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 })
 export class TaskMaintenanceComponent extends GenericAlert implements OnInit {
 
+  taskSearch: TaskRequest;
+  listEmployees: Array<EmployeeResponse>;
+  codeEmployee: string;
   destroy: Subject<boolean>;
 
   @ViewChild('grid') grid: GenericTableComponent;
@@ -31,14 +36,22 @@ export class TaskMaintenanceComponent extends GenericAlert implements OnInit {
   constructor(private taskService: TaskService,
     private gridGenericStoreService: GridGenericStoreService,
     private taskStoreService: TaskStoreService,
+    private employeeService: EmployeeService,
     private modalService: NgbModal) {
       super();
+      this.taskSearch = new TaskRequest();
     this.destroy = new Subject<boolean>()
   }
 
   ngOnInit() {
     this.gridGenericStoreService.addColumns(this.buildGridColumns());
-    this.searchTasks();
+    this.initData();
+    this.customSearchTasks();
+  }
+
+  initData() {
+    this.employeeService.searchEmployees().takeUntil(this.destroy).subscribe(data => this.listEmployees = data);
+    this.codeEmployee = TypeUtils.DEFAULT_VALUE;
   }
 
   buildGridColumns(): any {
@@ -99,12 +112,25 @@ export class TaskMaintenanceComponent extends GenericAlert implements OnInit {
     modal.result.then(response => this.deleteTask(response, task))
   }
 
+  customSearchTasks() {
+    this.taskSearch.idEmployee = +this.codeEmployee === 0 ? null : +this.codeEmployee;
+    this.taskSearch.name = !this.taskSearch.name ? null : this.taskSearch.name.trim();
+    this.taskService.customSearchTasks(this.taskSearch).takeUntil(this.destroy).subscribe(
+      data => this.gridGenericStoreService.addData(data)
+    );
+  }
+
+  clearData() {
+    this.taskSearch = new TaskRequest();
+    this.codeEmployee = TypeUtils.DEFAULT_VALUE;
+  }
+
   deleteTask(response: number, task: TaskRequest) {
     if(response === 1) {
       this.taskService.deleteTask(task).takeUntil(this.destroy).subscribe(
         () => {
           this.showMessage(true, 'The operation was successful.');
-          this.searchTasks();
+          this.customSearchTasks();
         },
         () => this.showMessage(false, 'There was an error deleting the task.')
       );
@@ -125,17 +151,13 @@ export class TaskMaintenanceComponent extends GenericAlert implements OnInit {
   validateModalResponse(response: any) {
     if(response !== null) {
       this.showMessage(true, 'The operation was successful.');
-      this.searchTasks();
+      this.customSearchTasks();
     }
-  }
-
-  searchTasks() {
-    this.taskService.searchTasks().takeUntil(this.destroy).subscribe(data => this.gridGenericStoreService.addData(data));
   }
 
   markCompletationTasks() {
     const listTasks = new Array<TaskRequest>();
-    this.grid.getSelectedRows().foreach(task => {
+    this.grid.getSelectedRows().forEach(task => {
       const taskRequest = new TaskRequest();
       taskRequest.idTask = task.id;
       listTasks.push(taskRequest);
@@ -145,7 +167,7 @@ export class TaskMaintenanceComponent extends GenericAlert implements OnInit {
       this.taskService.completeTaskBatch(listTasks).takeUntil(this.destroy).subscribe(
         () => {
           this.showMessage(true, 'Selected tasks were completed.');
-          this.searchTasks();
+          this.customSearchTasks();
         },
         () => this.showMessage(false, 'There was an error completing the selected tasks.')
       );
