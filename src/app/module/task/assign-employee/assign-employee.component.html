@@ -1,0 +1,46 @@
+<div class="modal-header modal-header-style">
+    <span><b>ASSIGN EMPLOYEE</b></span>
+</div>
+<div class="modal-body">
+    <div class="container">
+        <div class="row mt-1">
+            <div class="col-sm-3">
+                <label for="task" class="col-form-label">Task:</label>
+            </div>
+
+            <div class="col-sm-9">
+                <select [(ngModel)]="codeTask" class="form-control">
+                    <option value="0">--SELECCIONE--</option>
+                    <option *ngFor="let task of listTasks" [value]="task.id">{{task.name}}</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row mt-1">
+            <div class="col-sm-3">
+                <label for="employee" class="col-form-label">Employee:</label>
+            </div>
+
+            <div class="col-sm-9">
+                <select [(ngModel)]="codeEmployee" class="form-control">
+                    <option value="0">--SELECCIONE--</option>
+                    <option *ngFor="let employee of listEmployees" [value]="employee.id">{{employee.names}} {{employee.surnames}}</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <table style="width: 100%;margin-top: 15px;">
+        <tr>
+            <td style="padding-left: 0px !important;">
+                <ngb-alert *ngIf="messageVisible" [type]="statusOperation" [dismissible]="false">
+                    <span [class]="styleMessage"></span>{{ message }}</ngb-alert>
+            </td>
+        </tr>
+    </table>
+</div>
+<div class="modal-footer">
+    <button (click)="assign()" class="btn btn-info btn-modal btn-sm"><span
+            class="fas fa-save mr-1"></span><b>ASSIGN</b></button>
+    <button type="button" class="btn btn-info btn-modal btn-sm" (click)="activeModal.close(null)"><span
+            class="fas fa-undo mr-1"></span><b>CANCEL</b></button>
+</div>

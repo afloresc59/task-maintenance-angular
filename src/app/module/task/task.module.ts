@@ -7,10 +7,11 @@ import { TaskMaintenanceComponent } from './task-maintenance/task-maintenance.co
 import { AddTaskComponent } from './add-task/add-task.component';
 import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { AssignEmployeeComponent } from './assign-employee/assign-employee.component';
 
 
 @NgModule({
-  declarations: [TaskMaintenanceComponent, AddTaskComponent],
+  declarations: [TaskMaintenanceComponent, AddTaskComponent, AssignEmployeeComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -19,7 +20,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     NgbModule
   ],
   entryComponents: [
-    AddTaskComponent
+    AddTaskComponent,
+    AssignEmployeeComponent
   ]
 })
 export class TaskModule { }

@@ -1,3 +1,4 @@
+import { AssignEmployeeComponent } from './../assign-employee/assign-employee.component';
 import { ConstantUtils } from './../../../utils/ConstantUtils';
 import { GenericAlert } from './../../../utils/GenericAlert';
 import { ModalConfirmationComponent } from './../../utility/modal-confirmation/modal-confirmation.component';
@@ -103,6 +104,11 @@ export class TaskMaintenanceComponent extends GenericAlert implements OnInit {
   openModal(action: string) {
     this.taskStoreService.addAction(action);
     const modal = this.modalService.open(AddTaskComponent, { centered: true, backdrop: 'static' });
+    modal.result.then(data => this.validateModalResponse(data));
+  }
+
+  openModalAssignEmployee() {
+    const modal = this.modalService.open(AssignEmployeeComponent, { centered: true, backdrop: 'static' });
     modal.result.then(data => this.validateModalResponse(data));
   }
 

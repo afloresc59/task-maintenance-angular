@@ -33,9 +33,13 @@ export class TaskService {
     return this.httpClient.put(this.apiUrl + PathApi.UPDATE_TASK, taskRequest);
   }
 
-
   deleteTask(taskRequest: TaskRequest): Observable<any> {
     return this.httpClient.put(this.apiUrl + PathApi.DELETE_TASK, taskRequest);
+  }
+
+  assignEmployee(codeTask: string, codeEmployee: string): Observable<any> {
+    const finalUrl = this.apiUrl + PathApi.ASSIGN_TASK.replace("{idTask}", codeTask).replace("{idEmployee}", codeEmployee);
+    return this.httpClient.put(finalUrl, null);
   }
 
 }

@@ -2,7 +2,7 @@ export class TypeUtils {
 
     static DEFAULT_VALUE_PROGRESS = 'P';
     static DEFAULT_VALUE_STATUS = '1';
-    static DEFAULT_VALUE_EMPLOYEE = '0';
+    static DEFAULT_VALUE = '0';
     
     static buildProgressTypes() {
         const progressTypes = [
