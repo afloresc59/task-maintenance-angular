@@ -1,11 +1,14 @@
-<div class="container mt-5">
+<div class="container-fluid mt-5">
     <div class="row">
         <div class="col-sm-9"></div>
         <div class="col-sm-3">
             <button (click)="openModalAddTask()" type="button" class="btn btn-info bt-sm fas fa-plus-circle mr-2">New
                 Task</button>
-            <button (click)="openModalAssignEmployee()" type="button" class="btn btn-info bt-sm fas fa-plus-circle mr-2">Assign
-                 Task</button>
+            <button (click)="openModalAssignEmployee()" type="button"
+                class="btn btn-info bt-sm fas fa-plus-circle mr-2">Assign
+                Task</button>
+            <button (click)="markCompletationTasks()" type="button"
+                class="btn btn-info bt-sm fas fa-plus-circle mr-2">Complete Tasks</button>
         </div>
     </div>
 
@@ -18,6 +21,6 @@
         </td>
     </tr>
 </table>
-<app-generic-table (viewEvent)="openModalViewTask($event)" (modifyEvent)="openModalModifyTask($event)"
+<app-generic-table #grid (viewEvent)="openModalViewTask($event)" (modifyEvent)="openModalModifyTask($event)"
     (deleteEvent)="openModalDeleteTask($event)">
 </app-generic-table>

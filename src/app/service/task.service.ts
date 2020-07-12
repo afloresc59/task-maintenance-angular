@@ -42,4 +42,8 @@ export class TaskService {
     return this.httpClient.put(finalUrl, null);
   }
 
+  completeTaskBatch(tasksRequest: Array<TaskRequest>): Observable<any> {
+    return this.httpClient.put(this.apiUrl + PathApi.COMPLETE_TASK_BATCH, tasksRequest);
+  }
+
 }

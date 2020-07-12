@@ -1,4 +1,4 @@
 <ag-grid-angular class="ag-theme-blue ag-grid"
   [gridOptions]="gridOptions" [columnDefs]="listColumns | async" [rowData]="listData | async" [context]="context" enableSorting="true" pagination="true"
-  paginationPageSize="10" (gridReady)="onGridReady($event)" suppressHorizontalScroll="true" [frameworkComponents]="frameworkComponents">
+  paginationPageSize="10" (gridReady)="onGridReady($event)" suppressHorizontalScroll="true" [frameworkComponents]="frameworkComponents" rowSelection= 'multiple'>
 </ag-grid-angular>

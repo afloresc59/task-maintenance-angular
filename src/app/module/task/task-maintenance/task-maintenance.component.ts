@@ -1,3 +1,4 @@
+import { GenericTableComponent } from './../../utility/generic-table/generic-table.component';
 import { AssignEmployeeComponent } from './../assign-employee/assign-employee.component';
 import { ConstantUtils } from './../../../utils/ConstantUtils';
 import { GenericAlert } from './../../../utils/GenericAlert';
@@ -9,11 +10,12 @@ import { GridGenericStoreService } from './../../../store/grid-generic-store.ser
 import { TaskResponse } from './../../../model/task-response';
 import { TaskService } from './../../../service/task.service';
 import { GenericBean } from './../../../model/generic-bean';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Subject } from 'rxjs';
 import 'rxjs/add/operator/takeUntil';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TaskRequest } from 'src/app/model/task-request';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-task-maintenance',
@@ -23,6 +25,8 @@ import { TaskRequest } from 'src/app/model/task-request';
 export class TaskMaintenanceComponent extends GenericAlert implements OnInit {
 
   destroy: Subject<boolean>;
+
+  @ViewChild('grid') grid: GenericTableComponent;
 
   constructor(private taskService: TaskService,
     private gridGenericStoreService: GridGenericStoreService,
@@ -39,6 +43,9 @@ export class TaskMaintenanceComponent extends GenericAlert implements OnInit {
 
   buildGridColumns(): any {
     const columnsDef = [
+      {
+        headerName: '', maxWidth: '40', headerCheckboxSelection: true, checkboxSelection: true, cellStyle: { 'text-align': 'center' }
+      },
       {
         headerName: '', cellRenderer: 'ButtonGridRendered', colId: 'params', cellStyle: { 'text-align': 'center' }
       },
@@ -95,7 +102,10 @@ export class TaskMaintenanceComponent extends GenericAlert implements OnInit {
   deleteTask(response: number, task: TaskRequest) {
     if(response === 1) {
       this.taskService.deleteTask(task).takeUntil(this.destroy).subscribe(
-        () => this.searchTasks(),
+        () => {
+          this.showMessage(true, 'The operation was successful.');
+          this.searchTasks();
+        },
         () => this.showMessage(false, 'There was an error deleting the task.')
       );
     }
@@ -114,12 +124,34 @@ export class TaskMaintenanceComponent extends GenericAlert implements OnInit {
 
   validateModalResponse(response: any) {
     if(response !== null) {
+      this.showMessage(true, 'The operation was successful.');
       this.searchTasks();
     }
   }
 
   searchTasks() {
     this.taskService.searchTasks().takeUntil(this.destroy).subscribe(data => this.gridGenericStoreService.addData(data));
+  }
+
+  markCompletationTasks() {
+    const listTasks = new Array<TaskRequest>();
+    this.grid.getSelectedRows().foreach(task => {
+      const taskRequest = new TaskRequest();
+      taskRequest.idTask = task.id;
+      listTasks.push(taskRequest);
+    });
+
+    if(listTasks.length > 0) {
+      this.taskService.completeTaskBatch(listTasks).takeUntil(this.destroy).subscribe(
+        () => {
+          this.showMessage(true, 'Selected tasks were completed.');
+          this.searchTasks();
+        },
+        () => this.showMessage(false, 'There was an error completing the selected tasks.')
+      );
+    } else {
+      this.showMessage(false, 'Select at least one task, please.')
+    }
   }
 
 }

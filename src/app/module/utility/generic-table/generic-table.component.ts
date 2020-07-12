@@ -49,6 +49,10 @@ export class GenericTableComponent implements OnInit {
     }
   }
 
+  getSelectedRows(){
+    return this.gridOptions.api.getSelectedRows();
+  }
+
   executeMethodVisualize(genericBean: GenericBean) {
     this.viewEvent.emit(genericBean);
   }
